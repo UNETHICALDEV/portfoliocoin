@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unethical Dev | Solana Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #050508;
+            --bg-card: #0d0d12;
+            --accent-green: #00ff41;
+            --accent-cyan: #00d9ff;
+            --accent-purple: #b833ff;
+            --accent-orange: #ff6b35;
+            --text-primary: #e0e0e0;
+            --text-dim: #808080;
+            --border-color: rgba(0, 255, 65, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Animated Background */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .bg-gradient-orbs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-green);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-cyan);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 7s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: var(--accent-purple);
+            top: 50%;
+            right: 10%;
+            animation-delay: 14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.1); }
+            66% { transform: translate(-50px, 100px) scale(0.9); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Header */
+        header {
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-green);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: 900;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: left;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(48px, 8vw, 120px);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(20px, 3vw, 36px);
+            color: var(--text-dim);
+            margin-bottom: 30px;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .platforms {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .platform-tag {
+            padding: 8px 18px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .platform-tag:hover {
+            background: rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 80px 0;
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 65, 0.02), transparent);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 900;
+            margin-bottom: 50px;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-text {
+            background: rgba(13, 13, 18, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .about-text p {
+            font-size: 18px;
+            line-height: 1.9;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: rgba(13, 13, 18, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateX(10px);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .stat-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .solana-address {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid var(--accent-green);
+            backdrop-filter: blur(10px);
+        }
+
+        .address-label {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-green);
+            font-size: 12px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .address-value {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+            font-size: 14px;
+            word-break: break-all;
+            line-height: 1.6;
+        }
+
+        /* Basecamp Section */
+        .basecamp-section {
+            padding: 80px 0;
+        }
+
+        .basecamp-intro {
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .basecamp-intro p {
+            font-size: 22px;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .basecamp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+        }
+
+        .basecamp-card {
+            background: rgba(13, 13, 18, 0.8);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .basecamp-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-green);
+            box-shadow: 0 20px 60px rgba(0, 255, 65, 0.2);
+        }
+
+        .basecamp-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: all 0.6s ease;
+        }
+
+        .basecamp-card:hover .basecamp-image {
+            transform: scale(1.05);
+        }
+
+        .basecamp-content {
+            padding: 30px;
+        }
+
+        .basecamp-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .basecamp-description {
+            color: var(--text-dim);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 80px 0;
+        }
+
+        .projects-empty {
+            text-align: center;
+            padding: 100px 40px;
+            background: linear-gradient(135deg, rgba(0, 255, 65, 0.05), rgba(0, 217, 255, 0.05));
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .projects-empty-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(40px, 6vw, 72px);
+            color: var(--accent-green);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .projects-empty-text {
+            font-size: 20px;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.9;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 80px 0;
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 65, 0.02));
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category {
+            padding: 35px;
+            background: rgba(13, 13, 18, 0.6);
+            border: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-category:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-cyan);
+            font-size: 20px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 10px 0;
+            color: var(--text-primary);
+            font-size: 16px;
+            position: relative;
+            padding-left: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-list li:hover {
+            color: var(--accent-green);
+            padding-left: 30px;
+        }
+
+        .skill-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 100px;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-text {
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .footer-text a {
+            color: var(--accent-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-text a:hover {
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .footer-tagline {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-green);
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .basecamp-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero {
+                padding: 60px 0 40px;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+
+            .basecamp-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-green), var(--accent-cyan));
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-green));
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="bg-grid"></div>
+        <div class="bg-gradient-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <img src="https://i.imgur.com/yLzrq3U.png" alt="Unethical Dev" class="profile-pic">
+                    <div class="logo">UNETHICAL.DEV</div>
+                </div>
+                <nav>
+                    <a href="#about">About</a>
+                    <a href="#basecamp">Basecamp</a>
+                    <a href="#projects">Projects</a>
+                    <a href="https://x.com/unethicaldev" target="_blank">X</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">UNETHICAL DEV</h1>
+                <div class="hero-subtitle">Solana Developer | Building in the open</div>
+                <div class="platforms">
+                    <span class="platform-tag">Pump.fun</span>
+                    <span class="platform-tag">Bonk</span>
+                    <span class="platform-tag">Solana</span>
+                    <span class="platform-tag">DeFi</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="container">
+                <h2 class="section-title">About the Dev</h2>
+                <div class="about-content">
+                    <div>
+                        <div class="about-text">
+                            <p>I didn't start in crypto.</p>
+                            <p>I started as a dev doing the work nobody wanted. Fixing broken stuff, shipping things no one cared about, watching other people take credit. <span class="highlight">Just code and repeat.</span></p>
+                            <p>I worked in big tech. Got fired. More than once.</p>
+                            <p>Not because I couldn't do the job, <span class="highlight">because I saw how the system actually works.</span></p>
+                            <p>This space pulled me in because it's raw and still early, no matter what people say.</p>
+                            <p>I'm gonna start deploying stuff openly and let the market decide. No stories. No hype.</p>
+                            <p><span class="highlight">You'll know when it's mine.</span></p>
+                            <p>First few might not even run. That's fine. I'm here to stay.</p>
+                            <p>If something works, I'll lean into it. If it doesn't, it dies.</p>
+                        </div>
+                        
+                        <div class="solana-address">
+                            <div class="address-label">Solana Address</div>
+                            <div class="address-value">ApS6Rz8osY5JWovvu29NseEUtXF99oZkvQHaBPHXPz3L</div>
+                        </div>
+                    </div>
+
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Current Focus</div>
+                            <div class="stat-value">Building on Solana. Deploying on Pump.fun, working with Bonk ecosystem, learning everything else.</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Philosophy</div>
+                            <div class="stat-value">Ship fast. Let the market decide. No BS marketing. Code speaks louder.</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Background</div>
+                            <div class="stat-value">Ex-big tech. Fired more than once. Saw how the system works. Chose raw over polished.</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Status</div>
+                            <div class="stat-value">Just starting. Nothing deployed yet. Building the foundation at basecamp.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Basecamp Section -->
+        <section class="basecamp-section" id="basecamp">
+            <div class="container">
+                <h2 class="section-title">Basecamp</h2>
+                <div class="basecamp-intro">
+                    <p>This is where all the cooks happen. Where we build foundation. The most important thing. When night rolls in, that's when we work.</p>
+                </div>
+                
+                <div class="basecamp-grid">
+                    <div class="basecamp-card">
+                        <img src="https://i.imgur.com/9ZVmx4g.png" alt="Basecamp at night" class="basecamp-image">
+                        <div class="basecamp-content">
+                            <h3 class="basecamp-title" style="color: var(--accent-green);">Night Mode</h3>
+                            <p class="basecamp-description">This is when we roll. When the real work happens. Building, testing, deploying. The grind. No distractions, just focus and code.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="basecamp-card">
+                        <img src="https://i.imgur.com/yZmFyB3.png" alt="Basecamp during day" class="basecamp-image">
+                        <div class="basecamp-content">
+                            <h3 class="basecamp-title" style="color: var(--accent-cyan);">Day Mode</h3>
+                            <p class="basecamp-description">The calm before the storm. Planning. Learning. Getting ready for the night session. Research, strategy, prep.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="basecamp-card">
+                        <img src="https://i.imgur.com/mDibz6f.png" alt="Cooking" class="basecamp-image">
+                        <div class="basecamp-content">
+                            <h3 class="basecamp-title" style="color: var(--accent-purple);">Cooking</h3>
+                            <p class="basecamp-description">This is the process. Sometimes it looks crazy. Most of the time it is. But this is where ideas become reality.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="basecamp-card">
+                        <img src="https://i.imgur.com/d2jcaAF.png" alt="Sunrise" class="basecamp-image">
+                        <div class="basecamp-content">
+                            <h3 class="basecamp-title" style="color: var(--accent-orange);">Sunrise</h3>
+                            <p class="basecamp-description">After a long night of building. Watching it come up. Reset. Do it again. The cycle continues.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects-section" id="projects">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <div class="projects-empty">
+                    <div class="projects-empty-title">NOTHING YET</div>
+                    <p class="projects-empty-text">
+                        I'm gonna start deploying stuff openly and let the market decide.<br>
+                        First few might not even run. That's fine.<br><br>
+                        You'll know when it's mine.<br><br>
+                        Watch this space. Or follow on <a href="https://x.com/unethicaldev" style="color: var(--accent-green); text-decoration: none;">X</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="skills-section">
+            <div class="container">
+                <h2 class="section-title">What I Work With</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Primary</h3>
+                        <ul class="skill-list">
+                            <li>Rust (Solana)</li>
+                            <li>Anchor Framework</li>
+                            <li>TypeScript</li>
+                            <li>React / Next.js</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Also Know</h3>
+                        <ul class="skill-list">
+                            <li>Solidity</li>
+                            <li>Python</li>
+                            <li>Node.js</li>
+                            <li>PostgreSQL</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Tools</h3>
+                        <ul class="skill-list">
+                            <li>Solana CLI</li>
+                            <li>Phantom / Backpack</li>
+                            <li>Git / GitHub</li>
+                            <li>Docker</li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h3>Learning</h3>
+                        <ul class="skill-list">
+                            <li>Metaplex</li>
+                            <li>Jupiter Aggregator</li>
+                            <li>Raydium SDK</li>
+                            <li>Everything else</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">
+                    Building in the open. Watch <a href="https://x.com/unethicaldev" target="_blank">@unethicaldev</a> on X
+                </p>
+                <div class="footer-tagline">Here to Stay</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth reveal on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.basecamp-card, .skill-category, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add parallax effect to orbs on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 50;
+                const xOffset = (x - 0.5) * speed;
+                const yOffset = (y - 0.5) * speed;
+                orb.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
